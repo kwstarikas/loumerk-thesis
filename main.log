@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.11.18)  3 DEC 2021 15:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.11.18)  3 DEC 2021 16:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -745,15 +745,15 @@ Class acmart Warning: A possible image without description on input line 43.
 <figures/OIDC.png, id=99, 926.71219pt x 382.42876pt>
 File: figures/OIDC.png Graphic file (type png)
 <use figures/OIDC.png>
-Package pdftex.def Info: figures/OIDC.png  used on input line 70.
+Package pdftex.def Info: figures/OIDC.png  used on input line 71.
 (pdftex.def)             Requested size: 370.67831pt x 152.96878pt.
 
 
-Class acmart Warning: A possible image without description on input line 72.
+Class acmart Warning: A possible image without description on input line 73.
 
 [4.4 <./figures/OIDC.png (PNG copy)>]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 9
-7.
+9.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
@@ -763,7 +763,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Overfull \hbox (10.16675pt too wide) in paragraph at lines 97--99
+Overfull \hbox (10.16675pt too wide) in paragraph at lines 99--101
 []\OT1/cmr/m/n/10 (-20) We used Di-rect Bind, to skip the search phase. All we 
 need to do was to set [][]\OT1/pcr/m/n/10 AUTH_LDAP_USER
  []
@@ -771,17 +771,17 @@ need to do was to set [][]\OT1/pcr/m/n/10 AUTH_LDAP_USER
 <figures/LDAP.png, id=112, 1010.27437pt x 390.70969pt>
 File: figures/LDAP.png Graphic file (type png)
 <use figures/LDAP.png>
-Package pdftex.def Info: figures/LDAP.png  used on input line 102.
+Package pdftex.def Info: figures/LDAP.png  used on input line 104.
 (pdftex.def)             Requested size: 303.08464pt x 117.2138pt.
 
-Class acmart Warning: A possible image without description on input line 104.
+Class acmart Warning: A possible image without description on input line 106.
 
 
-Underfull \vbox (badness 1102) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [5.5])
 (./sections/implementation.tex
-<figures/clientapp.png, id=125, 506.6428pt x 436.63126pt>
+<figures/clientapp.png, id=124, 506.6428pt x 436.63126pt>
 File: figures/clientapp.png Graphic file (type png)
 <use figures/clientapp.png>
 Package pdftex.def Info: figures/clientapp.png  used on input line 16.
@@ -790,7 +790,7 @@ Package pdftex.def Info: figures/clientapp.png  used on input line 16.
 
 Class acmart Warning: A possible image without description on input line 18.
 
-<figures/customOIDC.png, id=126, 457.71pt x 95.6072pt>
+<figures/customOIDC.png, id=125, 457.71pt x 95.6072pt>
 File: figures/customOIDC.png Graphic file (type png)
 <use figures/customOIDC.png>
 Package pdftex.def Info: figures/customOIDC.png  used on input line 23.
@@ -833,7 +833,7 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  17468 strings out of 478994
  262049 string characters out of 5864750
- 699923 words of memory out of 5000000
+ 699013 words of memory out of 5000000
  34244 multiletter control sequences out of 15000+600000
  416260 words of font info for 133 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
@@ -847,7 +847,7 @@ are/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-dist
 blic/amsfonts/cm/cmss9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmssbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 ></usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on main.pdf (8 pages, 837794 bytes).
+Output written on main.pdf (8 pages, 836429 bytes).
 PDF statistics:
  208 PDF objects out of 1000 (max. 8388607)
  170 compressed objects within 2 object streams
