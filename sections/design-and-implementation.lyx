@@ -1,0 +1,318 @@
+#LyX file created by tex2lyx 2.3
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin /home/loukas/Documents/Thesis/latex/CSD-thesis-template-master/sections/
+\textclass acmart
+\options acmsmall,screen,nonacm
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "courier" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Design and implementation
+\end_layout
+
+\begin_layout Standard
+In order to test SSO with OAuth and OIDC, we implement 3 applications with a high-level python framework named Django.
+\end_layout
+
+\begin_layout Subsection*
+3.1 OAuth 2.0
+\end_layout
+
+\begin_layout Standard
+OAuth is an open-standard authorization protocol or framework that provides applications the ability for âsecure designated access.â For example, you can tell Facebook that itâs OK for YouTube.com to access your profile or post updates to your timeline without having to give YouTube your Facebook password. This minimizes risk in a major way: In the event YouTube suffers a breach, your Facebook password remains safe.
+\end_layout
+
+\begin_layout Standard
+Glossary for the components are, 
+\series bold
+a) resource owner
+\series default
+ the user, 
+\series bold
+b) resource server
+\series default
+ a service hosting data, 
+\series bold
+c) client
+\series default
+ an application that accesses data residing the resource server, 
+\series bold
+d) authorization server
+\series default
+ authenticates the user and grants tokens, 
+\series bold
+e) access token
+\series default
+ a piece of data that represents the authorization to access resources on behalf of the resource owner.
+\end_layout
+
+\begin_layout Standard
+To enable the OAuth protocol in our project we need to create the 
+\series bold
+provider
+\series default
+ acting as resource server and authorization server, (resource server and authorization server can be separate applications, in this project its the same) and the 
+\series bold
+client
+\series default
+. For implementing the provider we used 
+\series bold
+Django OAuth Toolkit
+\series default
+ package, which provides all the endpoints, data, and logic needed to add OAuth2 capabilities to our Django project. With the toolkit we made our own Authorization Server to issue access tokens to client applications for a certain API, all we need to do is to include (vale kwdika) to installed apps and add the urls that toolkit provides by adding 
+\series bold
+vazw codika edw ?
+\series default
+ in url patterns. Now the provider knows where to look for the endpoints that the toolkit provides.
+\end_layout
+
+\begin_layout Standard
+Before our Application (the client), can use the Authorization Server for user login, we must first register the app. Once registered, the client will be granted access to the API, subject to approval by its users. The registration process will automatically generate a unique Client_id and Client_secret, we have to provide the rest of the informations.
+\end_layout
+
+\begin_layout Description
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+$
+\backslash
+bullet$ User:
+\end_layout
+
+\end_inset
+
+ the owner of the Application (e.g. a developer, or the currently logged in user.)
+\end_layout
+
+\begin_layout Description
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+$
+\backslash
+bullet$ Redirect uris:
+\end_layout
+
+\end_inset
+
+ Applications must register at least one redirection endpoint before using the authorization endpoint. The Authorization Server will deliver the access token to the client only if the client specifies one of the verified redirection uris.
+\end_layout
+
+\begin_layout Description
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+$
+\backslash
+bullet$ Client type:
+\end_layout
+
+\end_inset
+
+ this value affects the security level at which some communications between the client application and the authorization server are performed. For this project we use Confidential.
+\end_layout
+
+\begin_layout Description
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+$
+\backslash
+bullet$ Authorization grant type:
+\end_layout
+
+\end_inset
+
+ Authorization code
+\end_layout
+
+\begin_layout Description
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+$
+\backslash
+bullet$ Name:
+\end_layout
+
+\end_inset
+
+ this is the name of the client application on the server, and will be displayed on the authorization request page, where users can allow/deny access to their data.
+\end_layout
+
+\begin_layout Standard
+We used Authorization code because authorizing an application to access OAuth protected data, with this grant type, flow is always initiated by the user and application can prompt users to click a special link to start the process. When a user clicks the link, user is redirected to Authorization Server. If user is not logged in, he will be prompted for username and password. This is because the authorization page is login protected by django-oauth-toolkit. Login, then should see the form a user can use to give his authorization to the client application. User flags the checkbox, click Authorize, and he will be redirected again to the client.
+\end_layout
+
+\begin_layout Standard
+At this point the authorization server redirected the user to a special page on the client passing in an Authorization Code, a special token the client will use to obtain the final access token. This operation is usually done automatically by the client application during the request/response cycle.
+\end_layout
+
+\begin_layout Standard
+//todo grapse gia refresh token
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+definecolor{OAUTH}{RGB}{0 0 0}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\begin_inset Graphics 
+	filename CSD-thesis-template-master/figures/oauth.png
+	scale 30
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+textcolor{OAUTH}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+
+\series bold
+3.2 OAuth flow
+\series default
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+3.3 OpenID Connect
+\end_layout
+
+\begin_layout Standard
+OAuth 2.0 is designed only for authorization, for granting access to data and features from one application to another. OpenID Connect (OIDC) is a thin layer that sits on top of OAuth 2.0 that adds login and profile information about the person who is logged in. Establishing a login session is often referred to as authentication, and information about the person logged in (i.e. the Resource Owner) is called identity. When an Authorization Server supports OIDC, it is sometimes called an identity provider, since it provides information about the Resource Owner back to the Client. OIDC flow looks the same as OAuth, the only differences are, in the initial request, a specific scope of 
+\series bold
+openid
+\series default
+ is used, and the Server responds with an Access Token and A JSON Web Token (JWT) that contains the information about the Resource owner.
+\end_layout
+
+\end_body
+\end_document
