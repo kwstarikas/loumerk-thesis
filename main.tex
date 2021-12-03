@@ -88,6 +88,7 @@
 %% "authornote" and "authornotemark" commands
 %% used to denote shared contribution to the research.
 \author{Loukas Merkouris}
+
 \affiliation{%
   \department{Computer Science Department}
   \institution{University of Crete}
@@ -101,7 +102,7 @@
 %% other information printed in the page headers. This command allows
 %% the author to define a more concise list
 %% of authors' names for this purpose.
-\renewcommand{\shortauthors}{L. Merkouris}
+\renewcommand{\shortauthors}{L. Merkouris 3131}
 
 %%
 %% The abstract is a short summary of the work to be presented in the
@@ -120,29 +121,6 @@
 \input{sections/conclusion}
 
 \hl{Format references as ``title: url``...}
-\begin{thebibliography}{9}
-
-	\bibitem{oauthtoolkit}
-	\href{https://django-oauth-toolkit.readthedocs.io/en/latest/}{Django OAuth Toolkit documentation.}
-
-	\bibitem{OAUTH}
-	\href{https://oauth.net/2/}{OAuth 2.0, the industry-standard protocol for authorization.}
-
-	\bibitem{OIDC}
-	\href{https://openid.net/connect/}{OpenID Connect, a simple identity layer on top of the OAuth 2.0 protocol}
-
-	\bibitem{LDAP}
-	\href{https://ldap.com/}{LDAP, the Lightweight Directory Access Protocol.}
-
-	\bibitem{Django}
-	\href{https://www.djangoproject.com/}{Django, the high-level Python web framework.}
-
-	\bibitem{ldapauth}
-	\href{https://django-auth-ldap.readthedocs.io/en/latest/}{Django Authentication Using LDAP.}
-
-	\bibitem{djangosocial}
-	\href{https://python-social-auth.readthedocs.io/en/latest/configuration/django.html}{Django social auth documentation.}
-
-\end{thebibliography}
-
+\bibliographystyle{plain} % We choose the "plain" reference style
+\bibliography{acmart} % Entries are in the refs.bib file
 \end{document}

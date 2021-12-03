@@ -1,14 +1,15 @@
 \section{Implementation}
 
-In this section, we will take a closer look at how the implementation works. Starting from the Client and following to the Providers, showing how we add the components on each application, what extra code we use to enable different authentication and authorization schemes.
+In this section, we will take a closer look at how the implementation works. Starting from the Client and following the Providers, showing how we add the components on each application, what extra code we use to enable different authentication and authorization schemes. 
+
 
 \subsection{The Client}
 
 The client is a Django application with a custom user model. Django comes with a user authentication system. It handles user accounts, groups, and permissions, using cookie-based user sessions. For authenticating, Django searches for the given user's credentials in its backends, and if the user exists, Django authenticates and redirects the user to the proper URL. We implement 2 custom backends for the Client application, one for searching users in the OAuth Provider and one for OIDC Provider.
 
-We installed the Python \textbf{Social-Auth-Django} \cite{djangosocial} module, which is a package for authenticating against third-party applications, like GitHub, Google, Facebook, and other websites. It also contains the base class for the OAuth authentication backend, called BaseOAuth2. In our custom OAuth backend, we override some of the BaseOAuth2 components, so the backend knows where to search for the Authorization Server, where to get the token, and other details as we will see below.
+We installed the Python \textbf{django-social-auth} \cite{djangosocial} module, which is a package for authenticating against third-party applications, like GitHub, Google, Facebook, and other websites. It also contains the base class for the OAuth authentication backend, called BaseOAuth2. In our custom OAuth backend, we override some of the BaseOAuth2 components, so the backend knows where to search for the Authorization Server, where to get the token, and other details as we will see in fig. 5.
 
-For the OIDC custom backend, all we need to do is to overwrite the OpenIdConnectAuth class and provide the name of our backend and the URL of the Authorization Server.
+For the OIDC custom backend, all we need to do is to overwrite the OpenIdConnectAuth class, which django-social-auth also provides, provide the name of our backend and the URL of the Authorization Server. The Client is ready to redirect the Resource User to the Providers and initiate the OAuth2.0/OIDC process.
 
 
 \begin{figure}[htb]
@@ -30,12 +31,14 @@ For the OIDC custom backend, all we need to do is to overwrite the OpenIdConnect
 \subsection{The Providers}
 
 As mentioned, we used the Django-OAuth-Toolkit for the implementation of the Providers. To enable the Django-OAuth-Toolkit we need to add \verb|"oauth2_provider"| in installed apps and add the middleware \verb|"oauth2_provider.middleware.OAuth2TokenMiddleware"| in settings.py. The next step is to add the toolkit's backend for OAuth 2.0 requests by adding \verb|"oauth2_provider.backends.OAuth2Backend"| in authentication backends, and specify the scopes as: \\ \verb|'SCOPES': {'read': 'Read scope', 'write': 'Write scope'}|.
-In urls.py we add an extra URL: \verb|path('userinfo', user_info_secret)|, which is the endpoint in order for the custom backends know where to search for the user's information after authenticating. We also provide the OAuth toolkit's endpoints by adding \verb|url(r"^oauth/", include| \verb|('oauth2_provider.urls', namespace='oauth2_provider'))|.
-The only difference between the OIDC and OAuth Provider, is that in the OIDC implementation we add the specific scope of \textbf{openid} in \verb|'SCOPES'|.
+In urls.py we add an extra URL: \verb|path('userinfo', user_info_secret)|, which is the endpoint in order for the custom backends know where to search for the user's information after authenticating. We also provide the OAuth Toolkit's endpoints by adding \verb|url(r"^oauth/", include| \verb|('oauth2_provider.urls', namespace='oauth2_provider'))|.
 
-Finally, we have to register the Client in both Providers and set the correct Client\_id and Client\_secret in the Client's settings.py. For the OIDC implementation, we need to provide an algorithm, which is used for signing the WT that the Provider sends back to the Client, for which we used the RS256 algorithm. The providers are now ready to give Access Tokens to the Client.
 
-For the backends to know where to search for users and information about them, we add user serializers for parsing the user information and we add an endpoint, \verb|/userinfo| which listens to a method for returning the user's data.
+For the OIDC Provider implementation, we need to do two more steps. Add the specific scope of \textbf{openid} in \verb|'SCOPES'|, and create a \verb|CustomOAuth2Validator| method, which is used for mapping the user's info from the OIDC Provider to the Client. 
+
+
+
+Finally, we have to register the Client in both of the Providers and set the correct Client\_id and Client\_secret in Client's settings.py. For the OIDC implementation, we need to provide an algorithm, which is used for signing the JWT that the Provider sends back to Client, for which we used the RS256 algorithm. After the registration process, Providers are ready to give Access Tokens to Client.
 
 In the OIDC implementation, we also add the LDAP authentication scheme, by setting:
 
@@ -53,5 +56,14 @@ In the OIDC implementation, we also add the LDAP authentication scheme, by setti
 
 \end{itemize}
 OIDC Provider is ready to authenticate users using the remote database that LDAP server provides.
+
+
+\begin{figure}[htb]
+	\centering
+	\hspace*{-2cm}
+	\includegraphics[scale=0.5]{figures/implementation.png}
+	\caption{Implementation}
+\end{figure}
+
 
 \hl{Why not add the overall figure from the presentation and describe it?}
