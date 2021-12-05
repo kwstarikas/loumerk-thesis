@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.11.18)  3 DEC 2021 16:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.11.18)  5 DEC 2021 15:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -735,25 +735,25 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 <figures/oauth.png, id=86, 1168.365pt x 526.96875pt>
 File: figures/oauth.png Graphic file (type png)
 <use figures/oauth.png>
-Package pdftex.def Info: figures/oauth.png  used on input line 41.
+Package pdftex.def Info: figures/oauth.png  used on input line 57.
 (pdftex.def)             Requested size: 350.5122pt x 158.09184pt.
 
 
-Class acmart Warning: A possible image without description on input line 43.
+Class acmart Warning: A possible image without description on input line 59.
 
 [3.3 <./figures/oauth.png>]
-<figures/OIDC.png, id=99, 926.71219pt x 382.42876pt>
+<figures/OIDC.png, id=96, 926.71219pt x 382.42876pt>
 File: figures/OIDC.png Graphic file (type png)
 <use figures/OIDC.png>
-Package pdftex.def Info: figures/OIDC.png  used on input line 71.
+Package pdftex.def Info: figures/OIDC.png  used on input line 87.
 (pdftex.def)             Requested size: 370.67831pt x 152.96878pt.
 
 
-Class acmart Warning: A possible image without description on input line 73.
+Class acmart Warning: A possible image without description on input line 89.
 
 [4.4 <./figures/OIDC.png (PNG copy)>]
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 9
-9.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
+16.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
@@ -763,60 +763,70 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Overfull \hbox (10.16675pt too wide) in paragraph at lines 99--101
+Overfull \hbox (10.16675pt too wide) in paragraph at lines 116--118
 []\OT1/cmr/m/n/10 (-20) We used Di-rect Bind, to skip the search phase. All we 
 need to do was to set [][]\OT1/pcr/m/n/10 AUTH_LDAP_USER
  []
 
-<figures/LDAP.png, id=112, 1010.27437pt x 390.70969pt>
+<figures/LDAP.png, id=109, 1010.27437pt x 390.70969pt>
 File: figures/LDAP.png Graphic file (type png)
 <use figures/LDAP.png>
-Package pdftex.def Info: figures/LDAP.png  used on input line 104.
+Package pdftex.def Info: figures/LDAP.png  used on input line 121.
 (pdftex.def)             Requested size: 303.08464pt x 117.2138pt.
 
-Class acmart Warning: A possible image without description on input line 106.
+Class acmart Warning: A possible image without description on input line 123.
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [5.5])
-(./sections/implementation.tex
-<figures/clientapp.png, id=124, 506.6428pt x 436.63126pt>
+[5.5]) (./sections/implementation.tex [6.6 <./figures/LDAP.png (PNG copy)>]
+<figures/clientapp.png, id=132, 506.6428pt x 436.63126pt>
 File: figures/clientapp.png Graphic file (type png)
 <use figures/clientapp.png>
-Package pdftex.def Info: figures/clientapp.png  used on input line 16.
+Package pdftex.def Info: figures/clientapp.png  used on input line 17.
 (pdftex.def)             Requested size: 253.32079pt x 218.3151pt.
 
 
-Class acmart Warning: A possible image without description on input line 18.
+Class acmart Warning: A possible image without description on input line 19.
 
-<figures/customOIDC.png, id=125, 457.71pt x 95.6072pt>
+<figures/customOIDC.png, id=133, 457.71pt x 95.6072pt>
 File: figures/customOIDC.png Graphic file (type png)
 <use figures/customOIDC.png>
-Package pdftex.def Info: figures/customOIDC.png  used on input line 23.
+Package pdftex.def Info: figures/customOIDC.png  used on input line 24.
 (pdftex.def)             Requested size: 274.62813pt x 57.36475pt.
 
-Class acmart Warning: A possible image without description on input line 25.
+Class acmart Warning: A possible image without description on input line 26.
 
 
-Overfull \hbox (5.20488pt too wide) in paragraph at lines 32--35
+Overfull \hbox (5.20488pt too wide) in paragraph at lines 31--33
 \OT1/cmr/m/n/10 (-20) and add the mid-dle-ware [][]\OT1/pcr/m/n/10 "oauth2_prov
 ider.middleware.OAuth2TokenMiddleware"
  []
 
 
-Overfull \hbox (13.38072pt too wide) in paragraph at lines 32--35
-\OT1/cmr/m/n/10 (-20) cat-ing. We also pro-vide the OAuth toolkit's end-points 
+Overfull \hbox (15.81404pt too wide) in paragraph at lines 31--33
+\OT1/cmr/m/n/10 (-20) cat-ing. We also pro-vide the OAuth Toolkit's end-points 
 by adding [][]\OT1/pcr/m/n/10 url(r"^oauth/", include
  []
 
-[6.6 <./figures/LDAP.png (PNG copy)>] [7.7 <./figures/clientapp.png (PNG copy)>
- <./figures/customOIDC.png (PNG copy)>]) (./sections/conclusion.tex
+[7.7 <./figures/clientapp.png (PNG copy)> <./figures/customOIDC.png (PNG copy)>
+]
+<figures/implementation.png, id=142, 974.89218pt x 384.6872pt>
+File: figures/implementation.png Graphic file (type png)
+<use figures/implementation.png>
+Package pdftex.def Info: figures/implementation.png  used on input line 62.
+(pdftex.def)             Requested size: 487.4449pt x 192.34312pt.
+
+Overfull \hbox (36.93912pt too wide) in paragraph at lines 61--63
+ []|  [] 
+ []
+
+
+Class acmart Warning: A possible image without description on input line 64.
+
+) (./sections/conclusion.tex [8.8 <./figures/implementation.png (PNG copy)>]
 Processing 'acks' comment.
 \openout3 = `comment.cut'.
 
  Comment 'acks' writing to comment.cut.
-Straight input of comment.cut. (./comment.cut))
+Straight input of comment.cut. (./comment.cut)) (./main.bbl)
 (/usr/share/texmf-dist/tex/generic/stringenc/se-pdfdoc.def
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
 )
@@ -826,16 +836,16 @@ File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 
 Class acmart Warning: Some images may lack descriptions.
 
-[8.8] (./main.aux)
+[9.9] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 1DABA065F5F35C17BAF54A97A2D45AA4;1571.
+(rerunfilecheck)             Checksum: F0D653A0607584F099DFC18C7DCFC9BD;1571.
  ) 
 Here is how much of TeX's memory you used:
- 17468 strings out of 478994
- 262049 string characters out of 5864750
- 699013 words of memory out of 5000000
- 34244 multiletter control sequences out of 15000+600000
- 416260 words of font info for 133 fonts, out of 8000000 for 9000
+ 17496 strings out of 478994
+ 262547 string characters out of 5864750
+ 696185 words of memory out of 5000000
+ 34261 multiletter control sequences out of 15000+600000
+ 416414 words of font info for 136 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  96i,11n,131p,1440b,463s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
@@ -847,10 +857,10 @@ are/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-dist
 blic/amsfonts/cm/cmss9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmssbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 ></usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on main.pdf (8 pages, 836429 bytes).
+Output written on main.pdf (9 pages, 927709 bytes).
 PDF statistics:
- 208 PDF objects out of 1000 (max. 8388607)
- 170 compressed objects within 2 object streams
- 52 named destinations out of 1000 (max. 500000)
- 31383 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 216 PDF objects out of 1000 (max. 8388607)
+ 176 compressed objects within 2 object streams
+ 54 named destinations out of 1000 (max. 500000)
+ 33436 words of extra memory for PDF output out of 35830 (max. 10000000)
 

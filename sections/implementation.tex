@@ -9,7 +9,7 @@ The client is a Django application with a custom user model. Django comes with a
 
 We installed the Python \textbf{django-social-auth} \cite{djangosocial} module, which is a package for authenticating against third-party applications, like GitHub, Google, Facebook, and other websites. It also contains the base class for the OAuth authentication backend, called BaseOAuth2. In our custom OAuth backend, we override some of the BaseOAuth2 components, so the backend knows where to search for the Authorization Server, where to get the token, and other details as we will see in fig. 5.
 
-For the OIDC custom backend, all we need to do is to overwrite the OpenIdConnectAuth class, which django-social-auth also provides, provide the name of our backend and the URL of the Authorization Server. The Client is ready to redirect the Resource User to the Providers and initiate the OAuth2.0/OIDC process.
+For the OIDC custom backend, all we need to do is to overwrite the OpenIdConnectAuth class, which django-social-auth also provides, provide the name of our backend and the URL of the Authorization Server. The Client is ready to redirect the Resource User to the Providers and initiate the OAuth/OIDC process.
 
 
 \begin{figure}[htb]
@@ -26,11 +26,9 @@ For the OIDC custom backend, all we need to do is to overwrite the OpenIdConnect
 \end{figure}
 
 
-
-
 \subsection{The Providers}
 
-As mentioned, we used the Django-OAuth-Toolkit for the implementation of the Providers. To enable the Django-OAuth-Toolkit we need to add \verb|"oauth2_provider"| in installed apps and add the middleware \verb|"oauth2_provider.middleware.OAuth2TokenMiddleware"| in settings.py. The next step is to add the toolkit's backend for OAuth 2.0 requests by adding \verb|"oauth2_provider.backends.OAuth2Backend"| in authentication backends, and specify the scopes as: \\ \verb|'SCOPES': {'read': 'Read scope', 'write': 'Write scope'}|.
+As mentioned, we used the Django-OAuth-Toolkit for the implementation of the Providers. To enable the Django-OAuth-Toolkit we need to add \verb|"oauth2_provider"| in installed apps and add the middleware \verb|"oauth2_provider.middleware.OAuth2TokenMiddleware"| in settings.py. The next step is to add the toolkit's backend for OAuth requests by adding \verb|"oauth2_provider.backends.OAuth2Backend"| in authentication backends, and specify the scopes as: \\ \verb|'SCOPES': {'read': 'Read scope', 'write': 'Write scope'}|.
 In urls.py we add an extra URL: \verb|path('userinfo', user_info_secret)|, which is the endpoint in order for the custom backends know where to search for the user's information after authenticating. We also provide the OAuth Toolkit's endpoints by adding \verb|url(r"^oauth/", include| \verb|('oauth2_provider.urls', namespace='oauth2_provider'))|.
 
 
@@ -48,7 +46,7 @@ In the OIDC implementation, we also add the LDAP authentication scheme, by setti
 
 	\item \verb|AUTH_LDAP_BIND_DN|: Username.
 
-	\item \verb|AUTH_LDAP_BIND_PASSWORD|: Passwword.
+	\item \verb|AUTH_LDAP_BIND_PASSWORD|: Password.
 
 	\item \verb|AUTH_LDAP_USER_DN_TEMPLATE|: How to find the user.
 
@@ -65,5 +63,3 @@ OIDC Provider is ready to authenticate users using the remote database that LDAP
 	\caption{Implementation}
 \end{figure}
 
-
-\hl{Why not add the overall figure from the presentation and describe it?}

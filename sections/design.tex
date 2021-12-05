@@ -6,14 +6,30 @@ To test SSO with OAuth and OIDC, we implemented 3 applications with Django, whic
 
 \subsection{OAuth 2.0}
 
-OAuth 2.0 \cite{OAUTH} is an open-standard authorization protocol that provides applications the ability for ``secure designated access''. For example, you can tell Facebook that it’s ok for YouTube to access your profile or post updates to your timeline without having to give YouTube your Facebook password. This minimizes risk in a major way: in the event, YouTube suffers a breach, your Facebook password remains safe.
+OAuth is an open-standard authorization protocol that provides applications the ability for ``secure designated access''. For example, you can tell Facebook that it’s ok for YouTube to access your profile or post updates to your timeline without having to give YouTube your Facebook password. This minimizes risk in a major way: in the event, YouTube suffers a breach, your Facebook password remains safe.
 
-Glossary of the components are, \textbf{a) Resource Owner} is the user, \textbf{b) Resource Server} is a service hosting data, \textbf{c) Client} is an application that accesses data residing the Resource Server, \textbf{d) Authorization Server} authenticates the user and grants Tokens, and \textbf{e) Access Token} is a piece of data that represents the authorization to access resources on behalf of the Resource Owner.
+Glossary of the components are
+\begin{itemize}
+	
+	\item \textbf{Resource Owner:} The user.
+	
+	\item \textbf{Resource Server:} A service hosting data.
+	
+	\item \textbf{Client:} An application that accesses data residing the Resource Server.
+	
+	\item \textbf{Authorization Server:} Authenticates the user and grants Access Tokens.
+	
+	\item \textbf{Access Token:} A piece of data that represents the authorization to access resources on behalf of the Resource Owner.
+	
+	\item \textbf{Scopes:} A mechanism to limit an application's access to a user's account.
+	
+\end{itemize}
 
+An application can request one or more scopes. This information is presented to the user in the consent screen, and the Access Token issued to the application will be limited to the scopes granted. Access Token is something like a key, while scopes specify which doors the key can open. Acceptable scope values and which resources they relate to are dependent on the Resource Server.
 
 To enable the OAuth protocol in our project we created the \textbf{Provider}, acting both as the Resource Server and the Authorization Server, (the Resource and Authorization Servers can be separate applications, for this project they are the same), and the \textbf{Client}.
-For implementing the Provider we used the \textbf{Django OAuth Toolkit}\cite{oauthtoolkit} package, which provides all the endpoints, data, and logic needed to add OAuth 2.0 capabilities to our Django project.
-With the toolkit, we made our Authorization Server issue access tokens to Client applications for a certain API.
+For implementing the Provider we used the \textbf{Django OAuth Toolkit}\cite{oauthtoolkit} package, which provides all the endpoints, data, and logic needed to add OAuth capabilities to our Django project.
+With the toolkit, we made our Authorization Server issue Access Tokens to Client applications for a certain API.
 
 Before our Application (the Client), can use the Authorization Server for authorization or authentication, we must first register the app. Once registered, the Client will be granted access to the API, subject to approval by its users. The registration process will automatically generate a unique Client\_id and Client\_secret, which are used so the Client and the Authorization Server establish a working relationship. The Authorization Server generates the Client ID and Client Secret (sometimes called the App ID and App Secret) and gives them to the Client to use for all future OAuth exchanges. The Client Secret must be kept secret so that only the Client and Authorization Server know what it is. This is how the Authorization Server can verify the Client. We have to provide the rest of the information:
 
@@ -31,9 +47,10 @@ Before our Application (the Client), can use the Authorization Server for author
 
 \end{itemize}
 
-We used the Authorization Code grant type, because when authorizing an application to access OAuth protected data with this grant type, the flow is always initiated by the user and the application can prompt users to click a special link to start the process. When a user clicks the link, the user is redirected to the Authorization Server. If the user is not logged in, he will be prompted for a username and password. This is because the authorization page is login-protected by Django-OAuth-Toolkit. After login the user should see be presented with a form to give his authorization to the client application. User will flag the checkbox, click Authorize, and will be redirected again to the client.
+Authorization grant type refers to the way an application (the Client) gets an Access Token. OAuth defines several grant types and extensions can also define new grant types. Each grant type is optimized for a particular use case, whether that’s a web app, a native app, a device without the ability to launch a web browser, or server-to-server applications. We used the \textbf{Authorization Code} grant type, because when authorizing an application to access OAuth protected data with this grant type, the flow is always initiated by the user and the application can prompt users to click a special link to start the process. 
+When a user clicks the link, the Client redirects the browser to the Authorization Server. If the user is not logged in, he will be prompted for a username and password. This is because the authorization page is login-protected by Django-OAuth-Toolkit. After login the user should see be presented with a form, including the scopes, to give his authorization to the Client application. User will flag the checkbox, click Authorize, and will be redirected again to the Client.
 
-At this point the Authorization Server redirects the user to a special page on the Client passing in an Authorization Code and a special token that the Client will use to obtain the final Access Token. This operation is usually done automatically by the Client application during the request/response cycle. Access Tokens have a specific lifetime, given by the Authorization Server. In our case, the Access Token has a Refresh Token as well which is used for a brand new Access Token when necessary, without repeating the authorization process, as it has no expire time.
+At this point the Authorization Server redirects the user to a special page on the Client passing in an Authorization Code and a special token that the Client will use to obtain the final Access Token. This operation is usually done automatically by the Client application during the request/response cycle. Access Tokens have a specific lifetime, given by the Authorization Server. Access Token has a Refresh Token as well which is used for a brand new Access Token when necessary, without repeating the authorization process, as it has no expire time.
 
 \begin{figure}[htb]
 	\centering
@@ -42,7 +59,7 @@ At this point the Authorization Server redirects the user to a special page on t
 \end{figure}
 
 
-	The OAuth2.o flow (fig. 1) follows these steps:
+	The OAuth flow (fig. 1) follows these steps:
 	\begin{enumerate}
 		\item the Resource Owner, want to allow the Client the Client, to access data residing the Provider.
 		
@@ -62,8 +79,8 @@ The Client can now use the Access Token to send requests to the Resource Server 
 
 \subsection{OpenID Connect}
 
-OAuth 2.0 is designed only for authorization, for granting access to data and features from one application to another. After the OAuth flow, usually, the first step for the Client is to get information about the Resource Owner (the end-user), by sending a request to the Resource Server. That step can be avoided by using OIDC.
-OpenID Connect (OIDC) is a thin layer that sits on top of OAuth 2.0 that adds login and profile information about the person who is logged in. Establishing a login session is often referred to as authentication, and information about the person logged in (i.e. the Resource Owner) is called identity. When an Authorization Server supports OIDC, it is sometimes called an identity provider, since it provides information about the Resource Owner back to the Client. OIDC flow looks the same as OAuth, the only differences are that in the initial request, a specific scope of \textbf{openid} is used, and the Server responds with an Access Token and A JSON Web Token (JWT) that contains the information about the Resource owner.
+OAuth is designed only for authorization, for granting access to data and features from one application to another. After the OAuth flow, usually, the first step for the Client is to get information about the Resource Owner (the end-user), by sending a request to the Resource Server. That step can be avoided by using OIDC.
+OpenID Connect (OIDC) is a thin layer that sits on top of OAuth that adds login and profile information about the person who is logged in. Establishing a login session is often referred to as authentication, and information about the person logged in (i.e. the Resource Owner) is called identity. When an Authorization Server supports OIDC, it is sometimes called an identity provider, since it provides information about the Resource Owner back to the Client. OIDC flow looks the same as OAuth, the only differences are that in the initial request, a specific scope of \textbf{openid} is used, and the Server responds with an Access Token and A JSON Web Token (JWT) that contains the information about the Resource owner.
 
 \begin{figure}[htb]
 	\centering
@@ -71,7 +88,7 @@ OpenID Connect (OIDC) is a thin layer that sits on top of OAuth 2.0 that adds lo
 	\caption{OIDC flow}
 \end{figure}
 
-OIDC flow (fig. 2) is the same with OAuth2.0 flow with some extra steps.
+OIDC flow (fig. 2) is the same with OAuth flow with some extra steps.
 
 \begin{enumerate}
 	\item the Resource Owner, want to allow the Client the Client, to access data residing the Provider.
@@ -83,8 +100,9 @@ OIDC flow (fig. 2) is the same with OAuth2.0 flow with some extra steps.
 	\item The Client contacts the Authorization Server directly (does not use the Resource Owner’s browser) and securely sends its Client ID, Client Secret, and the Authorization Code.
 	
 	\item The Authorization Server verifies the data and responds with an Access Token and a \textbf{JSON Web Token}.
-\end{enumerate}
-	The Client can now use the Access Token to send requests to the Resource Server for accessing data and has information about the Resource Owner using the JWT.
+\end{enumerate}	
+
+Finally, the Client use the Access Token to access data (that the scopes specify) that resides to the Resource Server on behalf of the Resource Owner and using the JWT, the Client has information about the Resource Owner.
 	
 
 \subsection{Lightweight Directory Access Protocol}

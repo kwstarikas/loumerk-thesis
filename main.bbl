@@ -1,0 +1,32 @@
+\begin{thebibliography}{1}
+
+\bibitem{ldapauth}
+{Django Authentication Using LDAP.}
+\newblock \url{https://django-auth-ldap.readthedocs.io/en/latest/}.
+
+\bibitem{oauthtoolkit}
+{Django OAuth Toolkit Documentation}.
+\newblock \url{https://django-oauth-toolkit.readthedocs.io/en/latest/}.
+
+\bibitem{djangosocial}
+{Django social auth documentation.}
+\newblock
+  \url{https://python-social-auth.readthedocs.io/en/latest/configuration/django.html}.
+
+\bibitem{Django}
+{Django, the high-level Python web framework.}
+\newblock \url{https://www.djangoproject.com/}.
+
+\bibitem{LDAP}
+{LDAP, the Lightweight Directory Access Protocol.}
+\newblock \url{https://ldap.com/}.
+
+\bibitem{OAUTH}
+{OAuth 2.0, the industry-standard protocol for authorization.}
+\newblock \url{https://oauth.net/2/}.
+
+\bibitem{OIDC}
+{OpenID Connect, a simple identity layer on top of the OAuth 2.0 protocol}.
+\newblock \url{https://openid.net/connect/}.
+
+\end{thebibliography}
