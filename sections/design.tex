@@ -8,7 +8,7 @@ To test SSO with OAuth and OIDC, we implemented 3 applications with Django, whic
 
 OAuth is an open-standard authorization protocol that provides applications the ability for ``secure designated access''. For example, you can tell Facebook that it’s ok for YouTube to access your profile or post updates to your timeline without having to give YouTube your Facebook password. This minimizes risk in a major way: in the event, YouTube suffers a breach, your Facebook password remains safe.
 
-Glossary of the components are
+Glossary of the components are:
 \begin{itemize}
 	
 	\item \textbf{Resource Owner:} The user.
@@ -59,17 +59,17 @@ At this point the Authorization Server redirects the user to a special page on t
 \end{figure}
 
 
-	The OAuth flow (fig. 1) follows these steps:
+	The OAuth flow (fig. 1):
 	\begin{enumerate}
-		\item the Resource Owner, want to allow the Client the Client, to access data residing the Provider.
+		\item The \textbf{Resource Owner}, want to allow the \textbf{Client}, to access data residing the \textbf{Provider}.
 		
-		\item The Client redirects browser to the Authorization Server and includes with the request the Client ID, Redirect URI, Response Type, and one or more Scopes it needs. The Authorization Server verifies the user, and if necessary prompts for a login. he Authorization Server presents user with a Consent form based on the Scopes requested by the Client. User grant (or deny) permission.
+		\item The Client redirects browser to the \textbf{Authorization Server} and includes with the request the \textbf{Client ID}, \textbf{Redirect URI}, \textbf{Response Type}, and one or more \textbf{scopes} it needs. The \textbf{Authorization Server} verifies the user, and if necessary prompts for a login. The \textbf{Authorization Server} presents user with a Consent form based on the Scopes requested by the \textbf{Client}. User grant (or deny) permission.
 		
-		\item The Authorization Server redirects back to Client using the Redirect URI along with an Authorization Code.
+		\item The \textbf{Authorization Server} redirects back to \textbf{Client} using the \textbf{Redirect URI} along with an \textbf{Authorization Code}.
 		
-		\item The Client contacts the Authorization Server directly (does not use the Resource Owner’s browser) and securely sends its Client ID, Client Secret, and the Authorization Code.
+		\item The \textbf{Client} contacts the \textbf{Authorization Server} directly (does not use the Resource Owner’s browser) and securely sends its \textbf{Client ID}, \textbf{Client Secret}, and the \textbf{Authorization Code}.
 		
-		\item The Authorization Server verifies the data and responds with an Access Token.
+		\item The \textbf{Authorization Server} verifies the data and responds with an \textbf{Access Token}.
 		
 	\end{enumerate}
 The Client can now use the Access Token to send requests to the Resource Server for accessing data.
@@ -88,19 +88,14 @@ OpenID Connect (OIDC) is a thin layer that sits on top of OAuth that adds login 
 	\caption{OIDC flow}
 \end{figure}
 
-OIDC flow (fig. 2) is the same with OAuth flow with some extra steps.
+OIDC flow (fig. 2) is the same with the OAuth flow with two extra steps:
 
-\begin{enumerate}
-	\item the Resource Owner, want to allow the Client the Client, to access data residing the Provider.
+\begin{itemize}
 	
-	\item The Client redirects browser to the Authorization Server and includes with the request the Client ID, Redirect URI, Response Type, and one or more Scopes it needs. The Authorization Server verifies the user, and if necessary prompts for a login. The Authorization Server presents user with a Consent form based on the Scopes (a specific scope \textbf{openid} is used) requested by the Client. User grant (or deny) permission.
+	\item In step 2, The \textbf{Authorization Server} presents user with a consent form based on the scopes and a specific scope \textbf{openid} is used requested by the \textbf{Client}.
 	
-	\item The Authorization Server redirects back to Client using the Redirect URI along with an Authorization Code.
-	
-	\item The Client contacts the Authorization Server directly (does not use the Resource Owner’s browser) and securely sends its Client ID, Client Secret, and the Authorization Code.
-	
-	\item The Authorization Server verifies the data and responds with an Access Token and a \textbf{JSON Web Token}.
-\end{enumerate}	
+	\item In step 5, The \textbf{Authorization Server} verifies the data and responds with an \textbf{Access Token} and a \textbf{JSON Web Token}.
+\end{itemize}	
 
 Finally, the Client use the Access Token to access data (that the scopes specify) that resides to the Resource Server on behalf of the Resource Owner and using the JWT, the Client has information about the Resource Owner.
 	
@@ -122,22 +117,15 @@ With these settings, we are able to connect to an LDAP server. When the LDAP ser
 	\caption{OIDC with LDAP flow}
 \end{figure}
 
-The authentication scheme from a LDAP database with OIDC flow (fig. 2), follows these steps:
+The authentication scheme from a LDAP database with OIDC flow (fig. 3), its the same with OIDC flow, with the only difference is that the Provider search for users in a remote database:
 
-\begin{enumerate}
-	\item the Resource Owner, want to allow the Client the Client, to access data residing the Provider.
+\begin{itemize}
+
 	
-	\item The Client redirects browser to the Authorization Server and includes with the request the Client ID, Redirect URI, Response Type, and one or more Scopes it needs.
+	\item In step 3, the \textbf{Authorization Server }validates given credentials with the remote LDAP database. 
 	
-	\item  The Authorization Server validates given credentials with the remote LDAP database, 
+	\item In step 4, if the user exists, returns the user and create a local Django user. The \textbf{Authorization Server} presents user with a consent form based on the scopes (like OIDC a specific scope \textbf{openid} is used) requested by the \textbf{Client}. User grant (or deny) permission.
 	
-	\item If user exists, returns the user and create a local Django user. The Authorization Server presents user with a Consent form based on the Scopes (a specific scope \textbf{openid} is used) requested by the Client. User grant (or deny) permission.
 	
-	\item The Authorization Server redirects back to Client using the Redirect URI along with an Authorization Code.
-	
-	\item The Client contacts the Authorization Server directly (does not use the Resource Owner’s browser) and securely sends its Client ID, Client Secret, and the Authorization Code.
-	
-	\item The Authorization Server verifies the data and responds with an Access Token and a \textbf{JSON Web Token}.
-	
-\end{enumerate}
+\end{itemize}
 
