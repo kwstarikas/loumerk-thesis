@@ -63,7 +63,7 @@ At this point the Authorization Server redirects the user to a special page on t
 	\begin{enumerate}
 		\item The \textbf{Resource Owner}, want to allow the \textbf{Client}, to access data residing the \textbf{Provider}.
 		
-		\item \textbf{Resource Owner} clicks a special link to start the flow and the \textbf{Client }redirects browser to the \textbf{Authorization Server} and includes with the request the \textbf{Client ID}, \textbf{Redirect URI}, \textbf{Response Type}, and one or more \textbf{scopes} it needs. The \textbf{Authorization Server} verifies the user, and if necessary prompts for a login. The \textbf{Authorization Server} presents user with a consent form based on the scopes requested by the \textbf{Client}. \textbf{Resource Owner} grant (or deny) permission.
+		\item \textbf{Resource Owner} clicks a special link to start the flow and the \textbf{Client} redirects browser to the \textbf{Authorization Server} and includes with the request the \textbf{Client ID}, \textbf{Redirect URI}, \textbf{Response Type}, and one or more \textbf{scopes} it needs. The \textbf{Authorization Server} verifies the user, and if necessary prompts for a login, then presents user with a consent form based on the scopes requested by the \textbf{Client}. \textbf{Resource Owner} grant (or deny) permission.
 		
 		\item The \textbf{Authorization Server} redirects back to \textbf{Client} using the \textbf{Redirect URI} along with an \textbf{Authorization Code}.
 		
@@ -72,7 +72,7 @@ At this point the Authorization Server redirects the user to a special page on t
 		\item The \textbf{Authorization Server} verifies the data and responds with an \textbf{Access Token}.
 		
 	\end{enumerate}
-The Client can now use the Access Token to send requests to the Resource Server for accessing data.
+The Client can now use the Access Token to send requests to the Resource Server for accessing data. OAuth is used for generic authorization. For authentication, we need to create an API endpoint at the Provider and call it to learn the user's information.
 
 
 %\hl{Add a note that OAuth is used for generic authorization. For authentication, we then need to create an API endpoint at the server and call it to learn the user's ID, username, etc.}
