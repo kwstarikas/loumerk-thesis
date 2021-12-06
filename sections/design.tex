@@ -6,26 +6,26 @@ To test SSO with OAuth and OIDC, we implemented 3 applications with Django, whic
 
 \subsection{OAuth 2.0}
 
-OAuth is an open-standard authorization protocol that provides applications the ability for ``secure designated access''. For example, you can tell Facebook that it’s ok for YouTube to access your profile or post updates to your timeline without having to give YouTube your Facebook password. This minimizes risk in a major way: in the event, YouTube suffers a breach, your Facebook password remains safe.
+OAuth is an open-standard authorization protocol that provides applications the ability for ``secure designated access''. For example, you can tell Facebook that it’s ok for YouTube to access your profile or post updates to your timeline without having to give YouTube your Facebook password. This minimizes risk in a major way: in the event, YouTube suffers a breach, your Facebook password remains safe. Hence, OAuth solves the problem of sharing resources, users don't have to disclose passwords or create accounts to use a service. It's easy for end-users to use, and the access can be revoked anytime.
 
 Glossary of the components are:
 \begin{itemize}
 	
-	\item \textbf{Resource Owner:} The user.
-	
-	\item \textbf{Resource Server:} A service hosting data.
-	
-	\item \textbf{Client:} An application that accesses data residing the Resource Server.
-	
-	\item \textbf{Authorization Server:} Authenticates the user and grants Access Tokens.
+	\item \textbf{Resource Owner:} The user or system that owns the protected resources and can grant access to them.
 	
 	\item \textbf{Access Token:} A piece of data that represents the authorization to access resources on behalf of the Resource Owner.
+	
+	\item \textbf{Client:} A system that requires access to the protected resources. To access resources, the Client must hold the appropriate Access Token.
+	
+	\item \textbf{Authorization Server:} This server receives requests from the Client for Access Tokens and issues them upon successful authentication and consent by the Resource Owner. The authorization server exposes two endpoints: the Authorization endpoint, which handles the interactive authentication and consent of the user, and the Token endpoint, which is involved in a machine to machine interaction.
+	
+	\item \textbf{Resource Server:} A server that protects the user’s resources and receives access requests from the Client. It accepts and validates an Access Token from the Client and returns the appropriate resources to it.
 	
 	\item \textbf{Scopes:} A mechanism to limit an application's access to a user's account.
 	
 \end{itemize}
 
-An application can request one or more scopes. This information is presented to the user in the consent screen, and the Access Token issued to the application will be limited to the scopes granted. Access Token is something like a key, while scopes specify which doors the key can open. Acceptable scope values and which resources they relate to are dependent on the Resource Server.
+Scopes are used to specify exactly the reason for which access to resources may be granted. An application can request one or more scopes. This information is presented to the user in the consent screen, and the Access Token issued to the application will be limited to the scopes granted. Access Token is something like a key, while scopes specify which doors the key can open. Acceptable scope values and which resources they relate to are dependent on the Resource Server.
 
 To enable the OAuth protocol in our project we created the \textbf{Provider}, acting both as the Resource Server and the Authorization Server, (the Resource and Authorization Servers can be separate applications, for this project they are the same), and the \textbf{Client}.
 For implementing the Provider we used the \textbf{Django OAuth Toolkit}\cite{oauthtoolkit} package, which provides all the endpoints, data, and logic needed to add OAuth capabilities to our Django project.
