@@ -63,7 +63,7 @@ At this point the Authorization Server redirects the user to a special page on t
 	\begin{enumerate}
 		\item The \textbf{Resource Owner}, want to allow the \textbf{Client}, to access data residing the \textbf{Provider}.
 		
-		\item The Client redirects browser to the \textbf{Authorization Server} and includes with the request the \textbf{Client ID}, \textbf{Redirect URI}, \textbf{Response Type}, and one or more \textbf{scopes} it needs. The \textbf{Authorization Server} verifies the user, and if necessary prompts for a login. The \textbf{Authorization Server} presents user with a Consent form based on the Scopes requested by the \textbf{Client}. User grant (or deny) permission.
+		\item \textbf{Resource Owner} clicks a special link to start the flow and the \textbf{Client }redirects browser to the \textbf{Authorization Server} and includes with the request the \textbf{Client ID}, \textbf{Redirect URI}, \textbf{Response Type}, and one or more \textbf{scopes} it needs. The \textbf{Authorization Server} verifies the user, and if necessary prompts for a login. The \textbf{Authorization Server} presents user with a consent form based on the scopes requested by the \textbf{Client}. \textbf{Resource Owner} grant (or deny) permission.
 		
 		\item The \textbf{Authorization Server} redirects back to \textbf{Client} using the \textbf{Redirect URI} along with an \textbf{Authorization Code}.
 		
@@ -79,7 +79,7 @@ The Client can now use the Access Token to send requests to the Resource Server 
 
 \subsection{OpenID Connect}
 
-OAuth is designed only for authorization, for granting access to data and features from one application to another. After the OAuth flow, usually, the first step for the Client is to get information about the Resource Owner (the end-user), by sending a request to the Resource Server. That step can be avoided by using OIDC.
+OAuth is designed only for authorization, for granting access to data and features from one application to another. After the OAuth flow, usually the first step for the Client is to get information about the Resource Owner (the end-user), by sending a request to the Resource Server. That step can be avoided by using OIDC.
 OpenID Connect (OIDC) is a thin layer that sits on top of OAuth that adds login and profile information about the person who is logged in. Establishing a login session is often referred to as authentication, and information about the person logged in (i.e. the Resource Owner) is called identity. When an Authorization Server supports OIDC, it is sometimes called an identity provider, since it provides information about the Resource Owner back to the Client. OIDC flow looks the same as OAuth, the only differences are that in the initial request, a specific scope of \textbf{openid} is used, and the Server responds with an Access Token and A JSON Web Token (JWT) that contains the information about the Resource owner.
 
 \begin{figure}[htb]
@@ -124,7 +124,7 @@ The authentication scheme from a LDAP database with OIDC flow (fig. 3), its the 
 	
 	\item In step 3, the \textbf{Authorization Server }validates given credentials with the remote LDAP database. 
 	
-	\item In step 4, if the user exists, returns the user and create a local Django user. The \textbf{Authorization Server} presents user with a consent form based on the scopes (like OIDC a specific scope \textbf{openid} is used) requested by the \textbf{Client}. User grant (or deny) permission.
+	\item In step 4, if the user exists, returns the user and create a local Django user. The \textbf{Authorization Server} presents user with a consent form based on the scopes (like OIDC, a specific scope \textbf{openid} is used) requested by the \textbf{Client}. User grant (or deny) permission.
 	
 	
 \end{itemize}
