@@ -72,14 +72,14 @@ At this point the Authorization Server redirects the user to a special page on t
 		\item The \textbf{Authorization Server} verifies the data and responds with an \textbf{Access Token}.
 		
 	\end{enumerate}
-The Client can now use the Access Token to send requests to the Resource Server for accessing data. OAuth is used for generic authorization. For authentication, we need to create an API endpoint at the Provider and call it to learn the user's information.
+The Client can now use the Access Token to send requests to the Resource Server for accessing data. OAuth is used for generic authorization; for authentication, we need to create an API endpoint at the Provider and call it to learn the user's information.
 
 
 %\hl{Add a note that OAuth is used for generic authorization. For authentication, we then need to create an API endpoint at the server and call it to learn the user's ID, username, etc.}
 
 \subsection{OpenID Connect}
 
-OAuth is designed only for authorization, for granting access to data and features from one application to another. After the OAuth flow, usually the first step for the Client is to get information about the Resource Owner (the end-user), by sending a request to the Resource Server. That step can be avoided by using OIDC.
+OAuth is designed only for authorization, for granting access to data and features from one application to another. After the OAuth flow, usually the first step for the Client is to get information about the Resource Owner (the end-user), by sending the proper request to the Resource Server. That step can be avoided by using OIDC.
 OpenID Connect (OIDC) is a thin layer that sits on top of OAuth that adds login and profile information about the person who is logged in. Establishing a login session is often referred to as authentication, and information about the person logged in (i.e. the Resource Owner) is called identity. When an Authorization Server supports OIDC, it is sometimes called an identity provider, since it provides information about the Resource Owner back to the Client. OIDC flow looks the same as OAuth, the only differences are that in the initial request, a specific scope of \textbf{openid} is used, and the Server responds with an Access Token and A JSON Web Token (JWT) that contains the information about the Resource owner.
 
 \begin{figure}[htb]
@@ -92,12 +92,12 @@ OIDC flow (fig. 2) is the same with the OAuth flow with two extra steps:
 
 \begin{itemize}
 	
-	\item In step 2, The \textbf{Authorization Server} presents user with a consent form based on the scopes and a specific scope \textbf{openid} is used requested by the \textbf{Client}.
+	\item In step 2, the \textbf{Authorization Server} presents user with a consent form based on the scopes and a specific scope \textbf{openid} is used requested by the \textbf{Client}.
 	
-	\item In step 5, The \textbf{Authorization Server} verifies the data and responds with an \textbf{Access Token} and a \textbf{JSON Web Token}.
+	\item In step 5, the \textbf{Authorization Server} verifies the data and responds with an \textbf{Access Token} and a \textbf{JSON Web Token}.
 \end{itemize}	
 
-Finally, the Client use the Access Token to access data (that the scopes specify) that resides to the Resource Server on behalf of the Resource Owner and using the JWT, the Client has information about the Resource Owner.
+Finally, the Client use the Access Token to access data  that resides to the Resource Server on behalf of the Resource Owner; using the JWT the Client has information about the Resource Owner.
 	
 
 \subsection{Lightweight Directory Access Protocol}
@@ -117,7 +117,7 @@ With these settings, we are able to connect to an LDAP server. When the LDAP ser
 	\caption{OIDC with LDAP flow}
 \end{figure}
 
-The authentication scheme from a LDAP database with OIDC flow (fig. 3), its the same with OIDC flow, with the only difference is that the Provider search for users in a remote database:
+The authentication scheme from a LDAP database with OIDC flow (fig. 3), its the same with OIDC flow, the only difference is that the Provider search for users in a remote database:
 
 \begin{itemize}
 
@@ -129,3 +129,4 @@ The authentication scheme from a LDAP database with OIDC flow (fig. 3), its the 
 	
 \end{itemize}
 
+The Resource Owner, is authenticated to the Client using his credentials that exists in a remote database and Client has all the profile information of the LDAP user.
