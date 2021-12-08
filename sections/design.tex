@@ -6,29 +6,29 @@ To test SSO with OAuth and OIDC, we implemented 3 applications with Django, whic
 
 \subsection{OAuth 2.0}
 
-OAuth is an open-standard authorization protocol that provides applications the ability for ``secure designated access''. For example, you can tell Facebook that it’s ok for YouTube to access your profile or post updates to your timeline without having to give YouTube your Facebook password. This minimizes risk in a major way: in the event, YouTube suffers a breach, your Facebook password remains safe. Hence, OAuth solves the problem of sharing resources, users don't have to disclose passwords or create accounts to use a service. It's easy for end-users to use, and the access can be revoked anytime.
+OAuth is an open-standard authorization protocol that provides applications the ability for ``secure designated access''. For example, you can tell Facebook that it’s ok for YouTube to access your profile or post updates to your timeline without having to give YouTube your Facebook password. This minimizes risk in a major way: in the event, YouTube suffers a breach, your Facebook password remains safe. Hence, OAuth solves the problem of sharing resources, as users don't have to disclose passwords or create accounts to use a service. It's easy for end-users to use, and the access can be revoked anytime.
 
-Glossary of the components are:
+The glossary of OAuth includes the following components:
 \begin{itemize}
-	
+
 	\item \textbf{Resource Owner:} The user or system that owns the protected resources and can grant access to them.
-	
+
 	\item \textbf{Access Token:} A piece of data that represents the authorization to access resources on behalf of the Resource Owner.
-	
+
 	\item \textbf{Client:} A system that requires access to the protected resources. To access resources, the Client must hold the appropriate Access Token.
-	
+
 	\item \textbf{Authorization Server:} This server receives requests from the Client for Access Tokens and issues them upon successful authentication and consent by the Resource Owner. The authorization server exposes two endpoints: the Authorization endpoint, which handles the interactive authentication and consent of the user, and the Token endpoint, which is involved in a machine to machine interaction.
-	
+
 	\item \textbf{Resource Server:} A server that protects the user’s resources and receives access requests from the Client. It accepts and validates an Access Token from the Client and returns the appropriate resources to it.
-	
-	\item \textbf{Scopes:} A mechanism to limit an application's access to a user's account.
-	
+
+	\item \textbf{Scope:} A mechanism to limit an application's access to a user's account.
+
 \end{itemize}
 
-Scopes are used to specify exactly the reason for which access to resources may be granted. An application can request one or more scopes. This information is presented to the user in the consent screen, and the Access Token issued to the application will be limited to the scopes granted. Access Token is something like a key, while scopes specify which doors the key can open. Acceptable scope values and which resources they relate to are dependent on the Resource Server.
+Scopes are used to specify exactly the reason for which access to resources may be granted. An application can request one or more scopes. This information is presented to the user in the consent screen, and the Access Token issued to the application will be limited to the scopes granted. An Access Token is something like a key, while scopes specify which doors the key can open. Acceptable scope values and which resources they relate to are dependent on the Resource Server.
 
 To enable the OAuth protocol in our project we created the \textbf{Provider}, acting both as the Resource Server and the Authorization Server, (the Resource and Authorization Servers can be separate applications, for this project they are the same), and the \textbf{Client}.
-For implementing the Provider we used the \textbf{Django OAuth Toolkit}\cite{oauthtoolkit} package, which provides all the endpoints, data, and logic needed to add OAuth capabilities to our Django project.
+For implementing the Provider we used the \textbf{Django OAuth Toolkit}~\cite{oauthtoolkit} package, which provides all the endpoints, data, and logic needed to add OAuth capabilities to our Django project.
 With the toolkit, we made our Authorization Server issue Access Tokens to Client applications for a certain API.
 
 Before our Application (the Client), can use the Authorization Server for authorization or authentication, we must first register the app. Once registered, the Client will be granted access to the API, subject to approval by its users. The registration process will automatically generate a unique Client\_id and Client\_secret, which are used so the Client and the Authorization Server establish a working relationship. The Authorization Server generates the Client ID and Client Secret (sometimes called the App ID and App Secret) and gives them to the Client to use for all future OAuth exchanges. The Client Secret must be kept secret so that only the Client and Authorization Server know what it is. This is how the Authorization Server can verify the Client. We have to provide the rest of the information:
@@ -47,7 +47,7 @@ Before our Application (the Client), can use the Authorization Server for author
 
 \end{itemize}
 
-Authorization grant type refers to the way an application (the Client) gets an Access Token. OAuth defines several grant types and extensions can also define new grant types. Each grant type is optimized for a particular use case, whether that’s a web app, a native app, a device without the ability to launch a web browser, or server-to-server applications. We used the \textbf{Authorization Code} grant type, because when authorizing an application to access OAuth protected data with this grant type, the flow is always initiated by the user and the application can prompt users to click a special link to start the process. 
+The authorization grant type refers to the way an application (the Client) gets an Access Token. OAuth defines several grant types, while extensions can also define new grant types. Each grant type is optimized for a particular use case, whether that’s a web app, a native app, a device without the ability to launch a web browser, or server-to-server applications. We used the \textbf{Authorization Code} grant type, because when authorizing an application to access OAuth-protected data with this grant type, the flow is always initiated by the user and the application can prompt users to click a special link to start the process.
 When a user clicks the link, the Client redirects the browser to the Authorization Server. If the user is not logged in, he will be prompted for a username and password. This is because the authorization page is login-protected by Django-OAuth-Toolkit. After login the user should see be presented with a form, including the scopes, to give his authorization to the Client application. User will flag the checkbox, click Authorize, and will be redirected again to the Client.
 
 At this point the Authorization Server redirects the user to a special page on the Client passing in an Authorization Code and a special token that the Client will use to obtain the final Access Token. This operation is usually done automatically by the Client application during the request/response cycle. Access Tokens have a specific lifetime, given by the Authorization Server. Access Token has a Refresh Token as well which is used for a brand new Access Token when necessary, without repeating the authorization process, as it has no expire time.
@@ -55,24 +55,26 @@ At this point the Authorization Server redirects the user to a special page on t
 \begin{figure}[htb]
 	\centering
 	\includegraphics[scale=0.3]{figures/oauth.png}
-	\caption{OAuth flow}
+	\caption{OAuth flow}\label{oauth-flow}
 \end{figure}
 
-
-	The OAuth flow (fig. 1):
+	\pagebreak
+	The OAuth flow, shown in Fig.~\ref{oauth-flow}, goes as follows:
 	\begin{enumerate}
-		\item The \textbf{Resource Owner}, want to allow the \textbf{Client}, to access data residing the \textbf{Provider}.
-		
-		\item \textbf{Resource Owner} clicks a special link to start the flow and the \textbf{Client} redirects browser to the \textbf{Authorization Server} and includes with the request the \textbf{Client ID}, \textbf{Redirect URI}, \textbf{Response Type}, and one or more \textbf{scopes} it needs. The \textbf{Authorization Server} verifies the user, and if necessary prompts for a login, then presents user with a consent form based on the scopes requested by the \textbf{Client}. \textbf{Resource Owner} grant (or deny) permission.
-		
-		\item The \textbf{Authorization Server} redirects back to \textbf{Client} using the \textbf{Redirect URI} along with an \textbf{Authorization Code}.
-		
+		\item The \textbf{Resource Owner}, wants to allow the \textbf{Client} to access data residing in the \textbf{Provider}.
+
+		\item The \textbf{Resource Owner} clicks a special link to start the flow and the \textbf{Client} redirects the browser to the \textbf{Authorization Server} including with the request the \textbf{Client ID}, \textbf{Redirect URI}, \textbf{Response Type}, and one or more \textbf{Scopes} it needs. The \textbf{Authorization Server} verifies the user, and if necessary prompts for a login, then presents the user with a consent form based on the scopes requested by the \textbf{Client}. The \textbf{Resource Owner} grants (or denies) permission.
+
+		\item The \textbf{Authorization Server} redirects back to the \textbf{Client} using the \textbf{Redirect URI} along with an \textbf{Authorization Code}.
+
 		\item The \textbf{Client} contacts the \textbf{Authorization Server} directly (does not use the Resource Owner’s browser) and securely sends its \textbf{Client ID}, \textbf{Client Secret}, and the \textbf{Authorization Code}.
-		
+
 		\item The \textbf{Authorization Server} verifies the data and responds with an \textbf{Access Token}.
-		
+
+		\item The \textbf{Client} can now use the \textbf{Access Token} to send requests to the \textbf{Resource Server} for accessing data.
 	\end{enumerate}
-The Client can now use the Access Token to send requests to the Resource Server for accessing data. OAuth is used for generic authorization; for authentication, we need to create an API endpoint at the Provider and call it to learn the user's information.
+
+ Note that OAuth is used for generic authorization; for authentication, we need to create an API endpoint at the Provider and call it in order to learn information about the user (ID, username, etc.).
 
 
 %\hl{Add a note that OAuth is used for generic authorization. For authentication, we then need to create an API endpoint at the server and call it to learn the user's ID, username, etc.}
@@ -85,20 +87,21 @@ OpenID Connect (OIDC) is a thin layer that sits on top of OAuth that adds login 
 \begin{figure}[htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/OIDC.png}
-	\caption{OIDC flow}
+	\caption{OIDC flow}\label{oidc-flow}
 \end{figure}
 
-OIDC flow (fig. 2) is the same with the OAuth flow with two extra steps:
+\pagebreak
+The OIDC flow, shown in Fig.~\ref{oidc-flow}, is the same with the OAuth flow with two extra steps:
 
 \begin{itemize}
-	
-	\item In step 2, the \textbf{Authorization Server} presents user with a consent form based on the scopes and a specific scope \textbf{openid} is used requested by the \textbf{Client}.
-	
-	\item In step 5, the \textbf{Authorization Server} verifies the data and responds with an \textbf{Access Token} and a \textbf{JSON Web Token}.
-\end{itemize}	
 
-Finally, the Client use the Access Token to access data  that resides to the Resource Server on behalf of the Resource Owner; using the JWT the Client has information about the Resource Owner.
-	
+	\item In step 2, the \textbf{Authorization Server} presents the user with a consent form based on the scopes and a specific scope of \textbf{openid} is requested by the \textbf{Client}.
+
+	\item In step 5, the \textbf{Authorization Server} verifies the data and responds with both an \textbf{Access Token} and a \textbf{JSON Web Token}.
+\end{itemize}
+
+Finally, the Client uses the Access Token to access data that resides in the Resource Server on behalf of the Resource Owner; using the JWT the Client has all authentication information about the Resource Owner.
+
 
 \subsection{Lightweight Directory Access Protocol}
 
@@ -109,24 +112,24 @@ We add LDAP authentication in our OIDC Provider using the \textbf{auth-ldap} \ci
 Now that we can talk to the LDAP server, the next step is to authenticate a username and password. There are two ways to do this, called \textbf{search/bind} and \textbf{direct bind}. The first one involves connecting to the LDAP server either anonymously or with a fixed account, and searching for the distinguished name of the authenticating user. Then we can attempt to bind again with the user’s password. The second method is to derive the user’s DN from his username and attempt to bind as the user directly.
 
 We used Direct Bind, to skip the search phase. All we need to do was to set \verb|AUTH_LDAP_USER| \verb|_DN_TEMPLATE| to a template that will produce the authenticating user’s DN directly. This template should have one placeholder, \%(user)s. By setting \verb|AUTH_LDAP_USER_ATTR_MAP| we are able to match our user's model attributes with the LDAP user.
-With these settings, we are able to connect to an LDAP server. When the LDAP server authenticates the user's credentials, the auth-ldap backend will return an LDAP\_user and will create a Django user on return with the attributes that were given.
+With these settings, we are able to connect to an LDAP server. When the LDAP server authenticates the user's credentials, the auth-ldap backend will return an ldap\_user and will create a Django user on return with the attributes that were given.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[scale=0.3]{figures/LDAP.png}\\
-	\caption{OIDC with LDAP flow}
+	\includegraphics[scale=0.39]{figures/LDAP.png}\\
+	\caption{OIDC with LDAP flow}\label{ldap-flow}
 \end{figure}
 
-The authentication scheme from a LDAP database with OIDC flow (fig. 3), its the same with OIDC flow, the only difference is that the Provider search for users in a remote database:
+The flow of authentication when using an LDAP database with OIDC (Fig.~\ref{ldap-flow}), is the same as the OIDC flow, the only difference being that the Provider searches for users in a remote database:
 
 \begin{itemize}
 
-	
-	\item In step 3, the \textbf{Authorization Server }validates given credentials with the remote LDAP database. 
-	
-	\item In step 4, if the user exists, returns the user and create a local Django user. The \textbf{Authorization Server} presents user with a consent form based on the scopes (like OIDC, a specific scope \textbf{openid} is used) requested by the \textbf{Client}. User grant (or deny) permission.
-	
-	
+
+	\item In step 3, the \textbf{Authorization Server} validates given credentials with the remote LDAP database.
+
+	\item In step 4, if the remote user exists, a local Django user is created. The \textbf{Authorization Server} presents the user with a consent form based on the scopes (like OIDC, a specific scope \textbf{openid} is used) requested by the \textbf{Client}. User grants (or denies) permission.
+
+
 \end{itemize}
 
-The Resource Owner, is authenticated to the Client using his credentials that exists in a remote database and Client has all the profile information of the LDAP user.
+The Resource Owner, is authenticated by the Client using his credentials that exist in a remote database and the Client has all the profile information of the LDAP user, as the data is copied into the OIDC JWT.
